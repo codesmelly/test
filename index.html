@@ -239,7 +239,8 @@
                     myGameInstance.SendMessage('VkBridge', 'SubscriptionBoxResult', 'error');
                 }
           });
-        }        
+        }
+        
       }
 
     function CustomSend(nameMethod, paramsJson){
@@ -262,17 +263,7 @@
         .catch(error => {
             myGameInstance.SendMessage('VkBridge', 'SendResult', JSON.stringify(error));
         });;
-    }
-
-    function IsWebView() {
-        const bridge = vkBridge.default;
-        if (bridge.isWebView()) {
-            myGameInstance.SendMessage('VkBridge', 'IsWebViewResult', true);
-        }
-        else {
-            myGameInstance.SendMessage('VkBridge', 'IsWebViewResult', false);
-        }
-    }
+      }  
 
     
 </script>
