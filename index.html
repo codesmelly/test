@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Lost in nowhere</title>
+    <title>MicroMachines</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -29,14 +29,14 @@
 <script>
     const hideFullScreenButton = "";
     const buildUrl = "Build";
-    const loaderUrl = buildUrl + "/Build.loader.js";
+    const loaderUrl = buildUrl + "/build.loader.js";
     const config = {
-        dataUrl: buildUrl + "/Build.data.unityweb",
-        frameworkUrl: buildUrl + "/Build.framework.js.unityweb",
-        codeUrl: buildUrl + "/Build.wasm.unityweb",
+        dataUrl: buildUrl + "/build.data.unityweb",
+        frameworkUrl: buildUrl + "/build.framework.js.unityweb",
+        codeUrl: buildUrl + "/build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "SmellyCode",
-        productName: "Lost in nowhere",
+        productName: "MicroMachines",
         productVersion: "1.0",
     };
 
@@ -147,7 +147,10 @@
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(data));
         })  
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error);
+            myGameInstance.SendMessage('VkBridge', 'AdsFail', JSON.stringify(data));
+        });
     }
 
     function showRewarded(id){
@@ -156,7 +159,10 @@
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(data));
         })  
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error);
+            myGameInstance.SendMessage('VkBridge', 'AdsFail', JSON.stringify(data));
+        });
     }      
 
     function sendPost(text){
