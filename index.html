@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>MicroMachines</title>
+    <title>My project (3)</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -31,13 +31,13 @@
     const buildUrl = "Build";
     const loaderUrl = buildUrl + "/build.loader.js";
     const config = {
-        dataUrl: buildUrl + "/build.data.unityweb",
-        frameworkUrl: buildUrl + "/build.framework.js.unityweb",
-        codeUrl: buildUrl + "/build.wasm.unityweb",
+        dataUrl: buildUrl + "/build.data.gz",
+        frameworkUrl: buildUrl + "/build.framework.js.gz",
+        codeUrl: buildUrl + "/build.wasm.gz",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "SmellyCode",
-        productName: "MicroMachines",
-        productVersion: "1.0",
+        companyName: "DefaultCompany",
+        productName: "My project (3)",
+        productVersion: "0.1",
     };
 
     const container = document.querySelector("#unity-container");
@@ -147,10 +147,7 @@
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(data));
         })  
-        .catch(error => {
-            console.log(error);
-            myGameInstance.SendMessage('VkBridge', 'AdsFail', JSON.stringify(data));
-        });
+        .catch(error => console.log(error));
     }
 
     function showRewarded(id){
@@ -159,10 +156,7 @@
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(data));
         })  
-        .catch(error => {
-            console.log(error);
-            myGameInstance.SendMessage('VkBridge', 'AdsFail', JSON.stringify(data));
-        });
+        .catch(error => console.log(error));
     }      
 
     function sendPost(text){
