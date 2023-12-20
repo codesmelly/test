@@ -113,8 +113,7 @@
     }
     
     function getLaunchParams() {
-        console.error(window.location.href.platform);
-        myGameInstance.SendMessage('VkBridge', 'LaunchParamsResult', JSON.stringify(window.location.href.platform)); 
+        myGameInstance.SendMessage('VkBridge', 'LaunchParamsResult', ""); 
     }
     
     function appCheckNativeAds(ad_format)
