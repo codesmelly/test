@@ -114,7 +114,7 @@
     
     function getLaunchParams() {
         const bridge = vkBridge.default;
-        bridge.send("VKWebAppGetLaunchParams", {})
+        bridge.send("VKWebAppGetLaunchParams")
         .then(data => {
           console.log(data);
             myGameInstance.SendMessage('VkBridge', 'LaunchParamsResult', JSON.stringify(data));
