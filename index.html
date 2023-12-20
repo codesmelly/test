@@ -119,7 +119,9 @@
           console.log(data);
             myGameInstance.SendMessage('VkBridge', 'LaunchParamsResult', JSON.stringify(data));
         })  
-        .catch(error => console.log(error));     
+        .catch(error => {
+           myGameInstance.SendMessage('VkBridge', 'LaunchParamsResult', JSON.stringify(error)); 
+        });     
     }
     
     function appCheckNativeAds(ad_format)
