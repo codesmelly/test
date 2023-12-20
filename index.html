@@ -121,7 +121,7 @@
         })  
         .catch(error => {
             console.log(error);
-            myGameInstance.SendMessage('VkBridge', 'LaunchParamsResult',  JSON.stringify(error));
+            myGameInstance.SendMessage('VkBridge', 'LaunchParamsResult', error);
         });     
     }
     
