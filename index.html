@@ -109,11 +109,20 @@
             myGameInstance.SendMessage('VkBridge', 'AdvertisementPreloadedResult', JSON.stringify(data));
           }
         })  
-        .catch(error => console.log("VKWebAppGetAds" + error));          
+        .catch(error => console.log(error));          
     }
     
     function getLaunchParams() {
-        myGameInstance.SendMessage('VkBridge', 'LaunchParamsResult', "asd"); 
+        const bridge = vkBridge.default;
+        bridge.send("VKWebAppGetLaunchParams", {})
+        .then(data => {
+          console.log(data);
+            myGameInstance.SendMessage('VkBridge', 'LaunchParamsResult', JSON.stringify(data));
+        })  
+        .catch(error => {
+            console.log(error);
+            myGameInstance.SendMessage('VkBridge', 'LaunchParamsResult', JSON.stringify(data));
+        });     
     }
     
     function appCheckNativeAds(ad_format)
@@ -183,7 +192,7 @@
         })
         .catch(error => {
          
-          console.log("appGetUserInfo" + error);
+          console.log(error);
         });    
     }
 
