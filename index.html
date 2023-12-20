@@ -109,7 +109,7 @@
             myGameInstance.SendMessage('VkBridge', 'AdvertisementPreloadedResult', JSON.stringify(data));
           }
         })  
-        .catch(error => console.log(error));          
+        .catch(error => console.log("VKWebAppGetAds" + error));          
     }
     
     function getLaunchParams() {
@@ -183,7 +183,7 @@
         })
         .catch(error => {
          
-          console.log(error);
+          console.log("appGetUserInfo" + error);
         });    
     }
 
