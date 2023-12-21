@@ -91,7 +91,7 @@
     document.body.appendChild(script);
 
     function initBridge() {
-        console.log("initbridgr: " + window.location.href.platform);
+        console.log("initbridge: " + window.location.href);
         const bridge = vkBridge.default;     
         bridge.send("VKWebAppInit", {})
         .then(data => {
