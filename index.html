@@ -191,8 +191,7 @@
           myGameInstance.SendMessage('VkBridge', 'AuthResult', JSON.stringify(data));
         })
         .catch(error => {
-         
-          console.log(error);
+          console.log("appGetUserInfo: " + error);
         });    
     }
 
