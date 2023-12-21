@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>MicroMachines</title>
+    <title>TankDomination2</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -36,7 +36,7 @@
         codeUrl: buildUrl + "/Build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "SmellyCode",
-        productName: "MicroMachines",
+        productName: "TankDomination2",
         productVersion: "1.0",
     };
 
@@ -88,11 +88,6 @@
             alert(message);
         });
     };
-
-    var linkElement = document.createElement('a');
-    linkElement.id = 'link';
-    window.document.body.appendChild(linkElement);        
-    
     document.body.appendChild(script);
 
     function initBridge() {
@@ -119,7 +114,7 @@
           myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'true');
           break;
         }
-    }
+    }    
 
     function appGetAds() {
         const bridge = vkBridge.default;
@@ -170,24 +165,20 @@
         const bridge = vkBridge.default;
         bridge.send("VKWebAppShowNativeAds", {ad_format:"interstitial"})
         .then(data => {
+          window.focus();
           myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(data));
         })  
-        .catch(error => {
-            console.log(error);
-            myGameInstance.SendMessage('VkBridge', 'AdsFail', JSON.stringify(data));
-        });
+        .catch(error => console.log(error));
     }
 
     function showRewarded(id){
         const bridge = vkBridge.default;
         bridge.send("VKWebAppShowNativeAds", {ad_format:"reward", use_waterfall:true})
         .then(data => {
+          window.focus();  
           myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(data));
         })  
-        .catch(error => {
-            console.log(error);
-            myGameInstance.SendMessage('VkBridge', 'AdsFail', JSON.stringify(data));
-        });
+        .catch(error => console.log(error));
     }      
 
     function sendPost(text){
@@ -273,12 +264,6 @@
         }
         
       }
-
-    function OpenUrl(url) {
-        var link = document.getElementById('link');
-        link.setAttribute('href', url);
-        link.click();
-    }
 
     function CustomSend(nameMethod, paramsJson){
         var obj = {};
