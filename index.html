@@ -88,21 +88,27 @@
             alert(message);
         });
     };
-    document.body.appendChild(script);   
+    document.body.appendChild(script);  
 
     function initBridge() {
         const bridge = vkBridge.default;
+
         bridge.subscribe(eventHandler);
+
         bridge.send("VKWebAppInit", {})
-        .then(data => {          
+        .then(data => {
           myGameInstance.SendMessage('VkBridge', 'Initialized', JSON.stringify(data));
+
         })  
         .catch(error => console.log(error));          
     }
 
     function eventHandler(e) {
+
       const { type, data } = e.detail;
+
       console.log(type);
+
       switch(type) {
         case 'VKWebAppViewHide':
           myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'false');
@@ -111,7 +117,7 @@
           myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'true');
           break;
         }
-    } 
+    }    
     
     function appGetAds() {
         const bridge = vkBridge.default;
