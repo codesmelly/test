@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>MicroMachines</title>
+    <title>Lost in nowhere</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -36,7 +36,7 @@
         codeUrl: buildUrl + "/Build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "SmellyCode",
-        productName: "MicroMachines",
+        productName: "Lost in nowhere",
         productVersion: "1.0",
     };
 
@@ -88,12 +88,19 @@
             alert(message);
         });
     };
-
-    var linkElement = document.createElement('a');
-    linkElement.id = 'link';
-    window.document.body.appendChild(linkElement);        
-    
     document.body.appendChild(script);
+
+    window.addEventListener("blur", pause);
+    window.addEventListener("focus", play);
+
+
+    function pause() {
+        myGameInstance.SendMessage('VkBridge', 'WindowFocus', false);
+    }
+
+    function play() {
+        myGameInstance.SendMessage('VkBridge', 'WindowFocus', true);
+    }    
 
     function initBridge() {
         const bridge = vkBridge.default;     
@@ -155,10 +162,7 @@
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(data));
         })  
-        .catch(error => {
-            console.log(error);
-            myGameInstance.SendMessage('VkBridge', 'AdsFail', JSON.stringify(data));
-        });
+        .catch(error => console.log(error));
     }
 
     function showRewarded(id){
@@ -167,10 +171,7 @@
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(data));
         })  
-        .catch(error => {
-            console.log(error);
-            myGameInstance.SendMessage('VkBridge', 'AdsFail', JSON.stringify(data));
-        });
+        .catch(error => console.log(error));
     }      
 
     function sendPost(text){
@@ -256,12 +257,6 @@
         }
         
       }
-
-    function OpenUrl(url) {
-        var link = document.getElementById('link');
-        link.setAttribute('href', url);
-        link.click();
-    }
 
     function CustomSend(nameMethod, paramsJson){
         var obj = {};
