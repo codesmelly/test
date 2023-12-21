@@ -103,10 +103,23 @@
     }    
 
     function initBridge() {
-        const bridge = vkBridge.default;     
+        const bridge = vkBridge.default;
         bridge.send("VKWebAppInit", {})
         .then(data => {
-          myGameInstance.SendMessage('VkBridge', 'Initialized', JSON.stringify(data));  
+            bridge.subscribe((e) => {
+              if (e.detail.type === 'VKWebAppViewRestore') {
+                // Действия при восстановлении 
+                // экрана игры или мини-приложения
+                myGameInstance.SendMessage('VkBridge', 'WindowFocus', true);
+              }
+              if (e.detail.type === 'VKWebAppViewHide') {
+                // Действия при переключении
+                // из игры или мини-приложения
+                myGameInstance.SendMessage('VkBridge', 'WindowFocus', false);
+              }              
+            });            
+          myGameInstance.SendMessage('VkBridge', 'Initialized', JSON.stringify(data));
+
         })  
         .catch(error => console.log(error));          
     }
