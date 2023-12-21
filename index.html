@@ -88,41 +88,30 @@
             alert(message);
         });
     };
-    document.body.appendChild(script);
-
-    window.addEventListener("blur", pause);
-    window.addEventListener("focus", play);
-
-
-    function pause() {
-        myGameInstance.SendMessage('VkBridge', 'WindowFocus', false);
-    }
-
-    function play() {
-        myGameInstance.SendMessage('VkBridge', 'WindowFocus', true);
-    }    
+    document.body.appendChild(script);   
 
     function initBridge() {
         const bridge = vkBridge.default;
+        bridge.subscribe(eventHandler);
         bridge.send("VKWebAppInit", {})
-        .then(data => {
-            bridge.subscribe((e) => {
-              if (e.detail.type === 'VKWebAppViewRestore') {
-                // Действия при восстановлении 
-                // экрана игры или мини-приложения
-                myGameInstance.SendMessage('VkBridge', 'WindowFocus', true);
-              }
-              if (e.detail.type === 'VKWebAppViewHide') {
-                // Действия при переключении
-                // из игры или мини-приложения
-                myGameInstance.SendMessage('VkBridge', 'WindowFocus', false);
-              }              
-            });            
+        .then(data => {          
           myGameInstance.SendMessage('VkBridge', 'Initialized', JSON.stringify(data));
-
         })  
         .catch(error => console.log(error));          
     }
+
+    function eventHandler(e) {
+      const { type, data } = e.detail;
+      console.log(type);
+      switch(type) {
+        case 'VKWebAppViewHide':
+          myGameInstance.SendMessage('VkBridge', 'WindowFocus', false);
+          break;
+        case 'VKWebAppViewRestore': 
+          myGameInstance.SendMessage('VkBridge', 'WindowFocus', true);
+          break;
+        }
+    } 
     
     function appGetAds() {
         const bridge = vkBridge.default;
