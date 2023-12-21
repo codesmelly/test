@@ -105,10 +105,10 @@
       console.log(type);
       switch(type) {
         case 'VKWebAppViewHide':
-          myGameInstance.SendMessage('VkBridge', 'WindowFocus', false);
+          myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'false');
           break;
         case 'VKWebAppViewRestore': 
-          myGameInstance.SendMessage('VkBridge', 'WindowFocus', true);
+          myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'true');
           break;
         }
     } 
