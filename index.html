@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Lost in nowhere</title>
+    <title>{{{ PRODUCT_NAME }}}</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@vkontakte/vk-bridge@2.0.8/dist/index.umd.js"></script>
 </head>
 
-<body class="dark">
+<body class="{{{ SPLASH_SCREEN_STYLE.toLowerCase() }}}">
 <div id="unity-container" class="unity-desktop">
     <canvas id="unity-canvas"></canvas>
 </div>
@@ -29,15 +29,21 @@
 <script>
     const hideFullScreenButton = "";
     const buildUrl = "Build";
-    const loaderUrl = buildUrl + "/Build.loader.js";
+    const loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
     const config = {
-        dataUrl: buildUrl + "/Build.data.unityweb",
-        frameworkUrl: buildUrl + "/Build.framework.js.unityweb",
-        codeUrl: buildUrl + "/Build.wasm.unityweb",
+        dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+        frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+        codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+        #if MEMORY_FILENAME
+        memoryUrl: buildUrl + "/{{{ MEMORY_FILENAME }}}",
+        #endif
+        #if SYMBOLS_FILENAME
+        symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
+        #endif
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "SmellyCode",
-        productName: "Lost in nowhere",
-        productVersion: "1.0",
+        companyName: "{{{ COMPANY_NAME }}}",
+        productName: "{{{ PRODUCT_NAME }}}",
+        productVersion: "{{{ PRODUCT_VERSION }}}",
     };
 
     const container = document.querySelector("#unity-container");
@@ -66,6 +72,9 @@
         container.className = "unity-mobile";
         //config.devicePixelRatio = 1;
     }
+    #if BACKGROUND_FILENAME
+    canvas.style.background = "url('" + buildUrl + "/{{{ BACKGROUND_FILENAME.replace(/'/g, '%27') }}}') center / cover";
+    #endif
     loadingCover.style.display = "";
 
     let player;
@@ -88,41 +97,38 @@
             alert(message);
         });
     };
-    document.body.appendChild(script);
-
-    window.addEventListener("blur", pause);
-    window.addEventListener("focus", play);
-
-
-    function pause() {
-        myGameInstance.SendMessage('VkBridge', 'WindowFocus', false);
-    }
-
-    function play() {
-        myGameInstance.SendMessage('VkBridge', 'WindowFocus', true);
-    }    
+    document.body.appendChild(script);  
 
     function initBridge() {
         const bridge = vkBridge.default;
+        bridge.subscribe(eventHandler);
         bridge.send("VKWebAppInit", {})
         .then(data => {
-            bridge.subscribe((e) => {
-              if (e.detail.type === 'VKWebAppViewRestore') {
-                // Действия при восстановлении 
-                // экрана игры или мини-приложения
-                myGameInstance.SendMessage('VkBridge', 'WindowFocus', true);
-              }
-              if (e.detail.type === 'VKWebAppViewHide') {
-                // Действия при переключении
-                // из игры или мини-приложения
-                myGameInstance.SendMessage('VkBridge', 'WindowFocus', false);
-              }              
-            });            
           myGameInstance.SendMessage('VkBridge', 'Initialized', JSON.stringify(data));
 
         })  
         .catch(error => console.log(error));          
     }
+
+    function eventHandler(e) {
+
+      const { type, data } = e.detail;
+
+      console.log(type);
+      
+      switch(type) {
+        case 'VKWebAppViewHide':
+          myGameInstance.SendMessage('VkBridge', 'WindowFocus', false);
+          break;
+        case 'VKWebAppViewRestore': 
+          myGameInstance.SendMessage('VkBridge', 'WindowFocus', true);
+          break;
+                
+          // Обработчики других событий
+          // ...
+
+        }
+    }    
     
     function appGetAds() {
         const bridge = vkBridge.default;
