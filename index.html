@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>TankDomination2</title>
+    <title>Solitaire</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -36,8 +36,8 @@
         codeUrl: buildUrl + "/Build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "SmellyCode",
-        productName: "TankDomination2",
-        productVersion: "1.0",
+        productName: "Solitaire",
+        productVersion: "0.1",
     };
 
     const container = document.querySelector("#unity-container");
@@ -91,17 +91,17 @@
     document.body.appendChild(script);
 
     function initBridge() {
-        const bridge = vkBridge.default;
+        const bridge = vkBridge.default;  
 
         bridge.subscribe(eventHandler); 
-        
+           
         bridge.send("VKWebAppInit", {})
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'Initialized', JSON.stringify(data));  
         })  
         .catch(error => console.log(error));          
     }
-    
+
     function eventHandler(e) {
 
       const { type, data } = e.detail;
@@ -116,8 +116,8 @@
           myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'true');
           break;
         }
-    }    
-
+    }      
+    
     function appGetAds() {
         const bridge = vkBridge.default;
         bridge.send("VKWebAppGetAds", {})
@@ -167,7 +167,6 @@
         const bridge = vkBridge.default;
         bridge.send("VKWebAppShowNativeAds", {ad_format:"interstitial"})
         .then(data => {
-          window.focus();
           myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(data));
         })  
         .catch(error => console.log(error));
@@ -177,7 +176,6 @@
         const bridge = vkBridge.default;
         bridge.send("VKWebAppShowNativeAds", {ad_format:"reward", use_waterfall:true})
         .then(data => {
-          window.focus();  
           myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(data));
         })  
         .catch(error => console.log(error));
