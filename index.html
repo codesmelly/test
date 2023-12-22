@@ -94,7 +94,7 @@
         const bridge = vkBridge.default;  
 
         bridge.subscribe(eventHandler); 
-           
+
         bridge.send("VKWebAppInit", {})
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'Initialized', JSON.stringify(data));  
@@ -169,7 +169,10 @@
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(data));
         })  
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error);
+            myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(error));
+        });
     }
 
     function showRewarded(id){
@@ -178,7 +181,10 @@
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(data));
         })  
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error);
+            yGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(error));
+        });
     }      
 
     function sendPost(text){
