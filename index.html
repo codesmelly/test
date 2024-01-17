@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Mineshaft Survival</title>
+    <title>Lost in nowhere</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -36,8 +36,8 @@
         codeUrl: buildUrl + "/Build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "SmellyCode",
-        productName: "Mineshaft Survival",
-        productVersion: "0.1",
+        productName: "Lost in nowhere",
+        productVersion: "1.0",
     };
 
     const container = document.querySelector("#unity-container");
@@ -174,7 +174,10 @@
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(data));
         })  
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error);
+            myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(error));
+        });
     }
 
     function showRewarded(id){
@@ -183,7 +186,10 @@
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(data));
         })  
-        .catch(error => console.log(error));
+        .catch(error => {
+            console.log(error);
+            myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(error));
+        });
     }      
 
     function sendPost(text){
