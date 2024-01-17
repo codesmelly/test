@@ -168,7 +168,7 @@
         })  
         .catch(error => {
             myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(error));
-            console.log(error);
+            console.log(error);            
         });
     }
 
@@ -180,7 +180,7 @@
         })  
         .catch(error => {
             myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(error));
-            console.log(error);
+            console.log(error);            
         });
     }      
 
