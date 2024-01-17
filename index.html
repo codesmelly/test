@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>PaintRoller</title>
+    <title>Mineshaft Survival</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -36,7 +36,7 @@
         codeUrl: buildUrl + "/Build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "SmellyCode",
-        productName: "PaintRoller",
+        productName: "Mineshaft Survival",
         productVersion: "0.1",
     };
 
@@ -97,16 +97,16 @@
 
     function initBridge() {
         const bridge = vkBridge.default;
-        
-        bridge.subscribe(eventHandler); 
 
+        bridge.subscribe(eventHandler);
+ 
         bridge.send("VKWebAppInit", {})
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'Initialized', JSON.stringify(data));  
         })  
         .catch(error => console.log(error));          
     }
-    
+
     function eventHandler(e) {
 
       const { type, data } = e.detail;
@@ -121,11 +121,19 @@
           myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'true');
           break;
         }
-    }
-
+    }    
+    
     function appGetAds() {
         const bridge = vkBridge.default;
-        bridge.send('VKWebAppCheckNativeAds', { ad_format: 'interstitial'});
+        bridge.send("VKWebAppGetAds", {})
+        .then(data => {
+          console.log(data);
+          if (data.type == "VKWebAppCheckNativeAds")
+          {
+            myGameInstance.SendMessage('VkBridge', 'AdvertisementPreloadedResult', JSON.stringify(data));
+          }
+        })  
+        .catch(error => console.log(error));          
     }
     
     function getLaunchParams() {
