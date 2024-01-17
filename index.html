@@ -167,7 +167,7 @@
           myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(data));
         })  
         .catch(error => {
-            myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(data));
+            myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(error));
             console.log(error);
         });
     }
@@ -179,7 +179,7 @@
           myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(data));
         })  
         .catch(error => {
-            myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(data));
+            myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(error));
             console.log(error);
         });
     }      
