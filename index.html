@@ -111,7 +111,7 @@
 
       const { type, data } = e.detail;
 
-      console.log(e);
+      console.log(type);
 
       switch(type) {
         case 'VKWebAppViewHide':
@@ -167,7 +167,7 @@
           myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(data));
         })  
         .catch(error => {
-            myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(error));
+            myGameInstance.SendMessage('VkBridge', 'ShowInterstitialError', JSON.stringify(error));
             console.log(error);            
         });
     }
@@ -179,7 +179,7 @@
           myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(data));
         })  
         .catch(error => {
-            myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(error));
+            myGameInstance.SendMessage('VkBridge', 'ShowRewardedError', JSON.stringify(error));
             console.log(error);            
         });
     }      
