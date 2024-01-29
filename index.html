@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Mineshaft Survival</title>
+    <title>Lines</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -29,15 +29,15 @@
 <script>
     const hideFullScreenButton = "";
     const buildUrl = "Build";
-    const loaderUrl = buildUrl + "/BuildVoxel.loader.js";
+    const loaderUrl = buildUrl + "/Build.loader.js";
     const config = {
-        dataUrl: buildUrl + "/BuildVoxel.data.unityweb",
-        frameworkUrl: buildUrl + "/BuildVoxel.framework.js.unityweb",
-        codeUrl: buildUrl + "/BuildVoxel.wasm.unityweb",
+        dataUrl: buildUrl + "/Build.data.unityweb",
+        frameworkUrl: buildUrl + "/Build.framework.js.unityweb",
+        codeUrl: buildUrl + "/Build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "SmellyCode",
-        productName: "Mineshaft Survival",
-        productVersion: "0.1",
+        productName: "Lines",
+        productVersion: "1.0",
     };
 
     const container = document.querySelector("#unity-container");
@@ -97,16 +97,16 @@
 
     function initBridge() {
         const bridge = vkBridge.default;
+        
+        bridge.subscribe(eventHandler); 
 
-        bridge.subscribe(eventHandler);
- 
         bridge.send("VKWebAppInit", {})
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'Initialized', JSON.stringify(data));  
         })  
         .catch(error => console.log(error));          
     }
-
+    
     function eventHandler(e) {
 
       const { type, data } = e.detail;
@@ -121,19 +121,11 @@
           myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'true');
           break;
         }
-    }    
-    
+    }
+
     function appGetAds() {
         const bridge = vkBridge.default;
-        bridge.send("VKWebAppGetAds", {})
-        .then(data => {
-          console.log(data);
-          if (data.type == "VKWebAppCheckNativeAds")
-          {
-            myGameInstance.SendMessage('VkBridge', 'AdvertisementPreloadedResult', JSON.stringify(data));
-          }
-        })  
-        .catch(error => console.log(error));          
+        bridge.send('VKWebAppCheckNativeAds', { ad_format: 'interstitial'});
     }
     
     function getLaunchParams() {
@@ -174,7 +166,10 @@
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'ShowInterstitialResult', JSON.stringify(data));
         })  
-        .catch(error => console.log(error));
+        .catch(error => {
+            myGameInstance.SendMessage('VkBridge', 'ShowInterstitialError', JSON.stringify(error));
+            console.log(error);            
+        });
     }
 
     function showRewarded(id){
@@ -183,9 +178,26 @@
         .then(data => {
           myGameInstance.SendMessage('VkBridge', 'ShowRewardedResult', JSON.stringify(data));
         })  
-        .catch(error => console.log(error));
+        .catch(error => {
+            myGameInstance.SendMessage('VkBridge', 'ShowRewardedError', JSON.stringify(error));
+            console.log(error);            
+        });
     }      
 
+    function showBanner(location) {
+        bridge.send('VKWebAppShowBannerAd', {
+            banner_location: location
+        })
+            .then((data) => {
+                if (data.result) {
+                    // Баннерная реклама отобразилась
+                }
+            })
+            .catch((error) => {
+                // Ошибка
+                console.log(error);
+            });
+    }
     function sendPost(text){
         const bridge = vkBridge.default;
         bridge.send("VKWebAppShowWallPostBox", {
