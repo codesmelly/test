@@ -185,6 +185,7 @@
     }      
 
     function showBanner(location) {
+        const bridge = vkBridge.default;
         bridge.send('VKWebAppShowBannerAd', {
             banner_location: location
         })
