@@ -114,12 +114,15 @@
       console.log(type);
 
       switch(type) {
-        case 'VKWebAppViewHide':
-          myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'false');
-          break;
-        case 'VKWebAppViewRestore': 
-          myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'true');
-          break;
+          case 'VKWebAppViewHide':
+              myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'false');
+              break;
+          case 'VKWebAppViewRestore':
+              myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'true');
+              break;
+          case 'VKWebAppBannerAdClosedByUser':
+              myGameInstance.SendMessage('VkBridge', 'BannerClosedByUser', 'true');
+              break;
         }
     }
 
@@ -191,7 +194,7 @@
         })
             .then((data) => {
                 if (data.result) {
-                    // Баннерная реклама отобразилась
+                    
                 }
             })
             .catch((error) => {
