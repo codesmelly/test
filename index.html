@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Lines</title>
+    <title>PaintRoller</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -36,8 +36,8 @@
         codeUrl: buildUrl + "/Build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "SmellyCode",
-        productName: "Lines",
-        productVersion: "1.0",
+        productName: "PaintRoller",
+        productVersion: "0.1",
     };
 
     const container = document.querySelector("#unity-container");
@@ -114,15 +114,19 @@
       console.log(type);
 
       switch(type) {
-          case 'VKWebAppViewHide':
-              myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'false');
-              break;
-          case 'VKWebAppViewRestore':
-              myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'true');
-              break;
-          case 'VKWebAppBannerAdClosedByUser':
-              myGameInstance.SendMessage('VkBridge', 'BannerClosedByUser', 'true');
-              break;
+
+        case 'VKWebAppViewHide':
+          myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'false');
+          break;
+
+        case 'VKWebAppViewRestore': 
+          myGameInstance.SendMessage('VkBridge', 'WindowFocus', 'true');
+          break;
+
+        case 'VKWebAppBannerAdClosedByUser':
+          myGameInstance.SendMessage('VkBridge', 'BannerClosedByUser', 'true');
+          break;
+
         }
     }
 
@@ -202,6 +206,7 @@
                 console.log(error);
             });
     }
+
     function sendPost(text){
         const bridge = vkBridge.default;
         bridge.send("VKWebAppShowWallPostBox", {
