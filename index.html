@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NoobDestruction</title>
+    <title>GravityBall</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -35,8 +35,8 @@
         frameworkUrl: buildUrl + "/Build.framework.js.unityweb",
         codeUrl: buildUrl + "/Build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "SmellyCode",
-        productName: "NoobDestruction",
+        companyName: "DefaultCompany",
+        productName: "GravityBall",
         productVersion: "0.1",
     };
 
@@ -62,17 +62,19 @@
         return false;
     }());
 
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        container.className = "unity-mobile";
-        //config.devicePixelRatio = 1;
-    }
-    loadingCover.style.display = "";
-
     let player;
     let leaderboard;
     let myGameInstance = null;
     let payments = null;
     let promptCanShow = false;
+    let mobile = false;    
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        mobile = true;
+        //config.devicePixelRatio = 1;
+    }
+    loadingCover.style.display = "";
 
     const script = document.createElement("script");
     script.src = loaderUrl;
@@ -317,8 +319,11 @@
         .catch(error => {
             myGameInstance.SendMessage('VkBridge', 'SendResult', JSON.stringify(error));
         });;
-      }  
+    }
 
+    function CheckMobile() {
+        myGameInstance.SendMessage('VkBridge', 'CheckMobileResult', mobile);
+    }
     
 </script>
 </body>
