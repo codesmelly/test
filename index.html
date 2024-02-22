@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>NoobDestroysCity</title>
+    <title>GravityBall</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -35,8 +35,8 @@
         frameworkUrl: buildUrl + "/Build.framework.js.unityweb",
         codeUrl: buildUrl + "/Build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "SmellyCode",
-        productName: "NoobDestroysCity",
+        companyName: "DefaultCompany",
+        productName: "GravityBall",
         productVersion: "0.1",
     };
 
@@ -322,7 +322,12 @@
     }
 
     function CheckMobile() {
-        myGameInstance.SendMessage('VkBridge', 'CheckMobileResult', mobile);
+        if (mobile) {
+            myGameInstance.SendMessage('VkBridge', 'CheckMobileResult', 'true');
+        }
+        else {
+            myGameInstance.SendMessage('VkBridge', 'CheckMobileResult', 'false');
+        }
     }
     
 </script>
