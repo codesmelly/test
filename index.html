@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Mineshaft Survival</title>
+    <title>TankDomination2</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
 
@@ -36,8 +36,8 @@
         codeUrl: buildUrl + "/Build.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "SmellyCode",
-        productName: "Mineshaft Survival",
-        productVersion: "0.1",
+        productName: "TankDomination2",
+        productVersion: "1.0",
     };
 
     const container = document.querySelector("#unity-container");
@@ -97,18 +97,20 @@
     
     document.body.appendChild(script);
 
+    const bridge = vkBridge.default;
+    bridge.send("VKWebAppInit", {})
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => console.log(error)); 
+
     function initBridge() {
         const bridge = vkBridge.default;
         
         bridge.subscribe(eventHandler); 
 
-        bridge.send("VKWebAppInit", {})
-        .then(data => {
-         console.log('window.location.host');
-         console.log(window.location.host);
-          myGameInstance.SendMessage('VkBridge', 'Initialized', JSON.stringify(data));  
-        })  
-        .catch(error => console.log(error));          
+        myGameInstance.SendMessage('VkBridge', 'Initialized', 'true'); 
+         
     }
     
     function eventHandler(e) {
