@@ -104,6 +104,8 @@
 
         bridge.send("VKWebAppInit", {})
         .then(data => {
+         console.log('window.location.host');
+         console.log(window.location.host);
           myGameInstance.SendMessage('VkBridge', 'Initialized', JSON.stringify(data));  
         })  
         .catch(error => console.log(error));          
